@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>컴퓨터 수업 자료실</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root {
+  --bg: #f2f6fb; --surface: #ffffff; --ink: #14213d; --muted: #5b6a85; --line: #d9e2f0;
+  --accent: #ffc93c; --accent-ink: #14213d; --head: #14213d; --head-ink: #ffffff; --danger: #c4283f;
+  --f-display: "Jua", "Noto Sans KR", sans-serif;
+  --f-body: "Noto Sans KR", system-ui, -apple-system, "Malgun Gothic", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #0e1626; --surface: #172238; --ink: #e8eefb; --muted: #9aa9c6; --line: #2a3957; --head: #0a1120; --danger: #ff6b84; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #0e1626; --surface: #172238; --ink: #e8eefb; --muted: #9aa9c6; --line: #2a3957; --head: #0a1120; --danger: #ff6b84; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.55; }
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1000px; margin: 0 auto; }
+
+header.top { background: var(--head); color: var(--head-ink); padding: 28px 16px 56px; }
+header.top h1 { font-family: var(--f-display); font-weight: 400; font-size: clamp(2rem, 6vw, 2.9rem); margin: 0; line-height: 1.15; text-wrap: balance; }
+header.top h1 mark { background: var(--accent); color: var(--accent-ink); padding: 0 .25em; border-radius: 4px; }
+header.top p { margin: 10px 0 0; color: #c5d1ea; max-width: 42ch; }
+main.wrap { padding: 0 16px 64px; margin-top: -32px; display: grid; gap: 18px; }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+.panel h2 { font-family: var(--f-display); font-weight: 400; font-size: 1.3rem; margin: 0 0 8px; }
+.how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.how li { background: var(--bg); border-radius: 10px; padding: 12px 14px; font-size: .95rem; }
+.how b { display: block; font-family: var(--f-display); font-weight: 400; font-size: 1.05rem; margin-bottom: 2px; }
+
+.bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tab { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 7px 16px; cursor: pointer; font-weight: 500; }
+.tab[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn { border: 0; border-radius: 10px; padding: 9px 15px; font-weight: 700; cursor: pointer; background: var(--accent); color: var(--accent-ink); display: inline-flex; align-items: center; text-decoration: none; }
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.btn.small { padding: 6px 12px; font-size: .9rem; }
+
+.frame { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin-top: 12px; }
+.frame iframe { display: block; width: 100%; height: min(74vh, 720px); min-height: 420px; border: 0; background: #fff; }
+.under { margin-top: 8px; font-size: .88rem; color: var(--muted); }
+
+.setup label { display: block; font-weight: 700; font-size: .9rem; margin: 12px 0 4px; }
+.setup input, .setup textarea { width: 100%; border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 9px 11px; min-width: 0; }
+.setup .grid { display: grid; grid-template-columns: 1fr 2fr; gap: 10px; }
+.setup .hint { color: var(--muted); font-size: .9rem; margin: 0 0 6px; }
+.setup ol { margin: 8px 0 0; padding-left: 1.2em; color: var(--muted); font-size: .92rem; }
+.setup pre { background: var(--bg); border-radius: 8px; padding: 12px; overflow-x: auto; font-size: .85rem; margin: 6px 0 0; }
+.setup .err { color: var(--danger); font-size: .9rem; margin: 6px 0 0; }
+.empty { text-align: center; padding: 48px 16px; color: var(--muted); }
+.empty b { display: block; font-family: var(--f-display); font-weight: 400; font-size: 1.3rem; color: var(--ink); margin-bottom: 4px; }
+@media (max-width: 640px) { .how { grid-template-columns: 1fr; } .setup .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>컴퓨터 수업 <mark>자료실</mark></h1>
+    <p>수업에 쓰는 파일이 모두 여기 있어요. 파일을 찾아서 내려받아 보세요.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="panel" aria-label="내려받는 방법">
+    <h2>내려받는 방법</h2>
+    <ol class="how">
+      <li><b>1. 폴더 고르기</b>아래에서 종류나 차시 폴더를 눌러요.</li>
+      <li><b>2. 파일 누르기</b>내려받을 파일을 한 번 눌러요.</li>
+      <li><b>3. 다운로드 ⬇</b>오른쪽 위의 화살표 단추를 눌러요.</li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="bar">
+      <div class="tabs" id="tabs" role="group" aria-label="자료 폴더"></div>
+      <div class="tools">
+        <button class="btn ghost small" id="viewBtn" type="button">목록으로 보기</button>
+        <a class="btn small" id="openBtn" href="#" target="_blank" rel="noopener">드라이브에서 열기</a>
+        <button class="btn ghost small" id="setupBtn" type="button">선생님 설정</button>
+      </div>
+    </div>
+    <div class="frame" id="frame"></div>
+    <p class="under" id="under"></p>
+  </section>
+
+  <section class="panel setup" id="setup" hidden>
+    <h2>선생님 설정</h2>
+    <p class="hint">구글 드라이브 폴더 주소를 붙여 넣으면 이 페이지에 자료실이 나타나요. 폴더는 미리 "링크가 있는 모든 사용자 – 뷰어"로 공유해 두어야 학생들이 볼 수 있어요.</p>
+    <div id="rows"></div>
+    <div class="bar" style="margin-top:12px">
+      <button class="btn ghost small" id="addRow" type="button">폴더 칸 추가</button>
+      <button class="btn small" id="save" type="button">적용하기</button>
+    </div>
+    <p class="err" id="err" hidden></p>
+    <label for="upload">학생 제출함 주소 (선택)</label>
+    <input id="upload" placeholder="구글 설문(Forms)의 파일 올리기 주소">
+    <label for="code">학생들에게 보여 주려면 이 코드를 index.html에 넣으세요</label>
+    <pre id="code">적용하기를 누르면 코드가 만들어져요.</pre>
+    <ol>
+      <li>이 설정은 지금 쓰는 브라우저에만 저장돼요. 학생들에게 보이려면 위 코드를 index.html의 맨 위 SETTINGS 부분에 바꿔 넣어 주세요.</li>
+      <li>자료 올리기는 구글 드라이브에서 폴더를 열고 파일을 끌어다 놓으면 돼요. 한글, 워드, 파워포인트, 그림, 동영상 모두 올라가요.</li>
+    </ol>
+  </section>
+</main>
+
+<script>
+/* ===== SETTINGS: 여기를 바꾸면 모든 학생에게 적용돼요 =====
+   id는 드라이브 폴더 주소의 folders/ 뒤에 오는 글자예요. */
+var SETTINGS = {var SETTINGS = {
+  "folders": [
+    {
+      "name": "전체 자료",
+      "id": "1u3M_5zOEwfUiAolTCOsnfIK4OMyEUt3I"
+    }
+  ],
+  "uploadUrl": ""
+};
+  folders: [
+    /* { name: '전체 자료', id: '폴더ID를여기에' }, */
+  ],
+  uploadUrl: '' /* 학생 제출함(구글 설문) 주소. 없으면 비워 두세요. */
+};
+</script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var KEY = 'classroom-drive-v1';
+  var cfg = SETTINGS.folders.length ? SETTINGS : load() || SETTINGS;
+  var cur = 0, mode = 'grid';
+
+  function load() { try { var v = JSON.parse(localStorage.getItem(KEY)); return v && v.folders && v.folders.length ? v : null; } catch (e) { return null; } }
+  function store(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} }
+  function parseId(s) {
+    s = (s || '').trim();
+    var m = /folders\/([\w-]{10,})/.exec(s) || /[?&]id=([\w-]{10,})/.exec(s) || /^([\w-]{15,})$/.exec(s);
+    return m ? m[1] : '';
+  }
+  function el(tag, attrs, text) {
+    var n = document.createElement(tag);
+    for (var k in (attrs || {})) { if (k === 'class') n.className = attrs[k]; else if (k.slice(0, 2) === 'on') n.addEventListener(k.slice(2), attrs[k]); else n.setAttribute(k, attrs[k]); }
+    if (text) n.textContent = text; return n;
+  }
+
+  function render() {
+    var f = cfg.folders[cur], box = $('frame');
+    var tabs = $('tabs'); tabs.textContent = '';
+    cfg.folders.forEach(function (x, i) {
+      if (cfg.folders.length < 2) return;
+      tabs.appendChild(el('button', { class: 'tab', type: 'button', 'aria-pressed': String(i === cur), onclick: function () { cur = i; render(); } }, x.name));
+    });
+    box.textContent = '';
+    if (!f) {
+      var e = el('div', { class: 'empty' }); e.appendChild(el('b', {}, '아직 자료실이 연결되지 않았어요'));
+      e.appendChild(document.createTextNode('선생님이 오른쪽 위 "선생님 설정"에서 드라이브 폴더를 연결해 주세요.'));
+      box.appendChild(e);
+      $('openBtn').hidden = true; $('viewBtn').hidden = true; $('under').textContent = '';
+      return;
+    }
+    $('openBtn').hidden = false; $('viewBtn').hidden = false;
+    $('openBtn').href = 'https://drive.google.com/drive/folders/' + f.id;
+    $('viewBtn').textContent = mode === 'grid' ? '목록으로 보기' : '큰 그림으로 보기';
+    var ifr = el('iframe', { title: f.name + ' 폴더', src: 'https://drive.google.com/embeddedfolderview?id=' + encodeURIComponent(f.id) + '#' + mode, loading: 'lazy', referrerpolicy: 'no-referrer' });
+    box.appendChild(ifr);
+    $('under').textContent = '파일이 안 보이면 "드라이브에서 열기"를 눌러 보세요. 구글 계정으로 로그인해야 할 수도 있어요.';
+    if (cfg.uploadUrl) {
+      var a = el('a', { href: cfg.uploadUrl, target: '_blank', rel: 'noopener' }, ' 내 과제 제출하기');
+      $('under').appendChild(a);
+    }
+  }
+
+  /* 설정 */
+  function rowEl(name, id) {
+    var r = el('div', { class: 'grid' });
+    var n = el('input', { placeholder: '폴더 이름 (예: 3차시)', 'aria-label': '폴더 이름', maxlength: '20' }); n.value = name || '';
+    var u = el('input', { placeholder: '드라이브 폴더 주소를 붙여 넣으세요', 'aria-label': '드라이브 폴더 주소' }); u.value = id ? 'https://drive.google.com/drive/folders/' + id : '';
+    r.appendChild(n); r.appendChild(u); return r;
+  }
+  function fillRows() {
+    var box = $('rows'); box.textContent = '';
+    var list = cfg.folders.length ? cfg.folders : [{ name: '전체 자료', id: '' }];
+    list.forEach(function (f) { box.appendChild(rowEl(f.name, f.id)); });
+    $('upload').value = cfg.uploadUrl || '';
+  }
+  function apply() {
+    var out = [], bad = false;
+    Array.prototype.forEach.call($('rows').children, function (r) {
+      var ins = r.getElementsByTagName('input'), v = ins[1].value.trim();
+      if (!v) return;
+      var id = parseId(v);
+      if (!id) { bad = true; return; }
+      out.push({ name: ins[0].value.trim() || '자료', id: id });
+    });
+    var err = $('err');
+    if (bad || !out.length) { err.hidden = false; err.textContent = bad ? '폴더 주소를 읽지 못했어요. 드라이브에서 폴더를 열고 주소창의 주소를 그대로 붙여 넣어 주세요.' : '폴더 주소를 하나 이상 넣어 주세요.'; return; }
+    err.hidden = true;
+    cfg = { folders: out, uploadUrl: $('upload').value.trim() }; cur = 0;
+    store(cfg); render();
+    $('code').textContent = 'var SETTINGS = ' + JSON.stringify(cfg, null, 2) + ';';
+  }
+  $('setupBtn').addEventListener('click', function () { var s = $('setup'); s.hidden = !s.hidden; if (!s.hidden) { fillRows(); s.scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
+  $('addRow').addEventListener('click', function () { $('rows').appendChild(rowEl('', '')); });
+  $('save').addEventListener('click', apply);
+  $('viewBtn').addEventListener('click', function () { mode = mode === 'grid' ? 'list' : 'grid'; render(); });
+  render();
+})();
+</script>
+</body>
+</html>
